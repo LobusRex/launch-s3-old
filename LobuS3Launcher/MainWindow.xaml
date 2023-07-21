@@ -1,0 +1,73 @@
+﻿<Window
+	x:Class="LobuS3Launcher.MainWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="clr-namespace:LobuS3Launcher"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Title="Lobus S3 Launcher"
+	Width="400"
+	Height="400"
+	mc:Ignorable="d">
+
+	<Grid>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="Auto" />
+		</Grid.ColumnDefinitions>
+
+		<TabControl
+			x:Name="tabControl"
+			Grid.Column="0"
+			Margin="10"
+			Panel.ZIndex="7"
+			TabStripPlacement="Left">
+
+			<TabControl.Resources>
+				<Style TargetType="TabPanel">
+					<Setter Property="VerticalAlignment" Value="Bottom" />
+				</Style>
+			</TabControl.Resources>
+
+			<TabItem x:Name="tabItem1" Header="Welcome">
+				<TextBlock TextWrapping="Wrap">Launch button and stuff.</TextBlock>
+			</TabItem>
+			<TabItem x:Name="tabItem2" Header="Expansions">
+				<TextBlock TextWrapping="Wrap">Select expansion packs.</TextBlock>
+			</TabItem>
+			<TabItem Header="Custom Content">
+				<TextBlock TextWrapping="Wrap">Select custom content.</TextBlock>
+			</TabItem>
+			<TabItem Header="Scripting Mods">
+				<TextBlock TextWrapping="Wrap">Select scripting mods.</TextBlock>
+			</TabItem>
+			<TabItem Header="Setup">
+				<TextBlock TextWrapping="Wrap">Locate the game and DLC packs.</TextBlock>
+			</TabItem>
+			<TabItem Header="Control">
+				<TextBlock TextWrapping="Wrap">Perform actions, like installing the superpatch, cleaning saves, and clearing cache.</TextBlock>
+			</TabItem>
+			<TabItem Header="Settings">
+				<TextBlock TextWrapping="Wrap">Change launcher settings.</TextBlock>
+			</TabItem>
+
+		</TabControl>
+
+		<Grid
+			x:Name="extraSpace"
+			Grid.Column="0"
+			Margin="10,10,0,0"
+			HorizontalAlignment="Left">
+			<StackPanel
+				Margin="0,0,5,0"
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Top"
+				Orientation="Vertical">
+				<Button HorizontalAlignment="Stretch" Content="Launch Sims 3" />
+				<Label>version 1.67...</Label>
+				<!--  add extra space controls here...  -->
+			</StackPanel>
+		</Grid>
+	</Grid>
+</Window>
