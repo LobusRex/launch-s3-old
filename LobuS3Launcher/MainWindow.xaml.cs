@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -45,5 +47,10 @@ namespace LobuS3Launcher
 		{
 			extraSpace.Width = MathF.Min((float)tabItem1.ActualWidth, (float)tabItem2.ActualWidth);
 		}
-	}
+
+		private void LaunchButton_Click(object sender, RoutedEventArgs e)
+		{
+			Launcher.SingleCoreLaunch();
+		}
+    }
 }

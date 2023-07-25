@@ -64,7 +64,11 @@
 				HorizontalAlignment="Stretch"
 				VerticalAlignment="Top"
 				Orientation="Vertical">
-				<Button HorizontalAlignment="Stretch" Content="Launch Sims 3" />
+				<Button
+					x:Name="LaunchButton"
+					HorizontalAlignment="Stretch"
+					Click="LaunchButton_Click"
+					Content="Launch Sims 3" />
 				<Label>version 1.67...</Label>
 				<!--  add extra space controls here...  -->
 			</StackPanel>
