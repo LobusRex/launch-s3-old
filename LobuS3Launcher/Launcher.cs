@@ -1,32 +1,43 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading;
 
 namespace LobuS3Launcher
 {
-    class Launcher
-    {
-		private static readonly string gamePath = "D:\\Programs\\Electronic Arts\\The Sims 3\\Game\\Bin\\TS3W.exe";
+	class Launcher
+	{
+		public static readonly string gamePath = @"D:\Programs\Electronic Arts\The Sims 3\Game\Bin";
+		private static readonly string oldGame = "TS3W.exe";
+		private static readonly string newGame = "TS3L.exe";
+
 		private static readonly int startupAffinity = 0b1;
 		private static readonly int startupDelayMs = 5000;
 
 		public static void SingleCoreLaunch()
 		{
-			Thread thread = new Thread(new ThreadStart(StartS3));
+			Thread thread = new Thread(new ThreadStart(SingleCoreLaunchThread));
 			thread.Start();
 		}
 
-		private static void StartS3()
+		private static void SingleCoreLaunchThread()
 		{
+			string newGamePath = Path.Combine(gamePath, newGame);
+			string oldGamePath = Path.Combine(gamePath, oldGame);
+
+			// Select which TS3*.exe to run.
+			string TS3Path = File.Exists(newGamePath) ? newGamePath : oldGamePath;
+			
+			Trace.WriteLine("Starting " + TS3Path);
+
 			Process ts3 = new Process();
+			ts3.StartInfo.FileName = TS3Path;
 
 			// Start the game.
 			try
 			{
-				ts3.StartInfo.FileName = gamePath;
-				bool test = ts3.Start();
-
-				Trace.WriteLine(test ? "Started" : "Not started");
+				// Start the game.
+				Trace.WriteLine(ts3.Start() ? "Started" : "Not started");
 			}
 			catch
 			{
@@ -34,7 +45,9 @@ namespace LobuS3Launcher
 			}
 
 			// Limit core usage until the game is started.
-			// Inspired by the script by miaa234 found at https://answers.ea.com/t5/Technical-Issues-PC/Sims-3-won-t-open-Alder-Lake-Intel-12th-gen-CPU/td-p/11057820/page/5.
+			// Inspired by Miaa234's core limiting script.
+			// https://answers.ea.com/t5/Technical-Issues-PC/Sims-3-won-t-open-Alder-Lake-Intel-12th-gen-CPU/td-p/11057820/page/5.
+			// Miaa245 https://answers.ea.com/t5/user/viewprofilepage/user-id/7950707
 			try
 			{
 				// Save core usage and limit to a single core.
