@@ -53,18 +53,5 @@ namespace ExpansionEnabler
 				src[offset + i] = insertion[i];
 			}
 		}
-
-		// Inspired by a question and answer from Stack Overflow.
-		// https://stackoverflow.com/q/12262536/13798212
-		// Asked by Edgar https://stackoverflow.com/users/1479536/edgar
-		// Answered by Wallace Kelly https://stackoverflow.com/users/167920/wallace-kelly
-		public static void CopyTo(this RegistryKey src, RegistryKey dst)
-		{
-			// Copy the values.
-			foreach (var name in src.GetValueNames())
-			{
-				dst.SetValue(name, src.GetValue(name), src.GetValueKind(name));
-			}
-		}
 	}
 }

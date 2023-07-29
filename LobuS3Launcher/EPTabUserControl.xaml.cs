@@ -1,6 +1,11 @@
-﻿using System;
+﻿using Common;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Diagnostics;
+using System.DirectoryServices;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +17,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace LobuS3Launcher.Tabs
 {
@@ -21,9 +25,66 @@ namespace LobuS3Launcher.Tabs
 	/// </summary>
 	public partial class EPTabUserControl : UserControl
 	{
+		private readonly List<ExpansionPack> expansionPacks;
+
 		public EPTabUserControl()
 		{
 			InitializeComponent();
+
+			expansionPacks = new List<ExpansionPack>()
+			{
+				new ExpansionPack(EP01CheckBox, "The Sims 3 World Adventures"),
+				new ExpansionPack(EP02CheckBox, "The Sims 3 Ambitions"),
+				new ExpansionPack(EP03CheckBox, "The Sims 3 Late Night"),
+				new ExpansionPack(EP04CheckBox, "The Sims 3 Generations"),
+				new ExpansionPack(EP05CheckBox, "The Sims 3 Pets"),
+				new ExpansionPack(EP06CheckBox, "The Sims 3 Showtime"),
+				new ExpansionPack(EP07CheckBox, "The Sims 3 Supernatural"),
+				new ExpansionPack(EP08CheckBox, "The Sims 3 Seasons"),
+				new ExpansionPack(EP09CheckBox, "The Sims 3 University Life"),
+				new ExpansionPack(EP10CheckBox, "The Sims 3 Island Paradise"),
+				new ExpansionPack(EP11CheckBox, "The Sims 3 Into The Future"),
+			};
+
+			Loaded += EPTab_Loaded;
+		}
+
+		private void EPTab_Loaded(object sender, RoutedEventArgs e)
+		{
+			UpdateCheckBoxes();
+		}
+		
+		public void UpdateCheckBoxes()
+		{
+			// Check if SimL and TS3L.exe exist.
+			bool LRegistryExists = MachineRegistry.KeyExists(MachineRegistry.SimsKey, MachineRegistry.BaseGameKey);
+			bool LGameExists = File.Exists(Path.Combine(Launcher.GamePath, Launcher.NewGame));
+
+			foreach (ExpansionPack expansion in expansionPacks)
+			{
+				// Check if this expansion has sub keys in Sims and SimL.
+				bool EPExists = MachineRegistry.KeyExists(MachineRegistry.SimsKey, expansion.GameKey);
+				bool EPActive = MachineRegistry.KeyExists(MachineRegistry.SimLKey, expansion.GameKey);
+
+				// Determin if this check box should be enabled and checked.
+				bool enable = LRegistryExists && LGameExists && EPExists;
+				bool active = LRegistryExists && LGameExists && EPActive;
+
+				// Update the check box.
+                if (expansion.CheckBox.Dispatcher.CheckAccess())
+                {
+					expansion.CheckBox.IsEnabled = enable;
+					expansion.SetCheckBoxChecked(active);
+				}
+				else
+				{
+					Dispatcher.Invoke(() =>
+					{
+						expansion.CheckBox.IsEnabled = enable;
+						expansion.SetCheckBoxChecked(active);
+					});
+				}
+			}
 		}
 
 		private void EnableEPButton_Click(object sender, RoutedEventArgs e)
@@ -36,14 +97,14 @@ namespace LobuS3Launcher.Tabs
 			SetEPSelectionEnabled(false, true, true);
 		}
 
-		private static void SetEPSelectionEnabled(bool enable, bool elevated, bool hideWindow)
+		private void SetEPSelectionEnabled(bool enable, bool elevated, bool hideWindow)
 		{
+			// Create the expansion enabler process.
 			Process process = new Process();
 			process.StartInfo.FileName = "ExpansionEnabler.exe";
 
 			process.StartInfo.ArgumentList.Add(enable ? "enable" : "disable");
-			process.StartInfo.ArgumentList.Add(Launcher.gamePath);
-			process.StartInfo.ArgumentList.Add(@"SOFTWARE\WOW6432Node");
+			process.StartInfo.ArgumentList.Add(Launcher.GamePath);
 
 			// Run as administrator.
 			if (elevated)
@@ -59,11 +120,63 @@ namespace LobuS3Launcher.Tabs
 				process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 			}
 
+			// Start the process.
 			try
 			{
 				process.Start();
 			}
 			catch { }
+
+			// Add an event to occur when the process is finished.
+			process.EnableRaisingEvents = true;
+			process.Exited += Process_Exited;
+		}
+
+		private void Process_Exited(object? sender, EventArgs e)
+		{
+			UpdateCheckBoxes();
+		}
+
+		private class ExpansionPack
+		{
+			public CheckBox CheckBox { get; private set; }
+			public string GameKey { get; private set; }
+
+			public ExpansionPack(CheckBox checkBox, string gameKey)
+			{
+				CheckBox = checkBox;
+				GameKey = gameKey;
+
+				CheckBox.Checked += CheckBox_Checked;
+				CheckBox.Unchecked += CheckBox_Unchecked;
+			}
+
+			public void SetCheckBoxChecked(bool active)
+			{
+				// This function makes it possible to change IsChecked without causing an event.
+
+				// Remove checked events.
+				CheckBox.Checked -= CheckBox_Checked;
+				CheckBox.Unchecked -= CheckBox_Unchecked;
+
+				CheckBox.IsChecked = active;
+
+				// Add checked events back.
+				CheckBox.Checked += CheckBox_Checked;
+				CheckBox.Unchecked += CheckBox_Unchecked;
+			}
+
+			private void CheckBox_Checked(object sender, RoutedEventArgs e)
+			{
+				// Copy the expansion key to SimL when the box is checked.
+				MachineRegistry.CopyKey(MachineRegistry.SimsKey, MachineRegistry.SimLKey, GameKey);
+			}
+
+			private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+			{
+				// Remove the expansion key from SimL when the box is unchecked.
+				MachineRegistry.DeleteKey(MachineRegistry.SimLKey, GameKey);
+			}
 		}
 	}
 }

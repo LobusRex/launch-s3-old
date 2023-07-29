@@ -30,7 +30,10 @@
 				</Style>
 			</TabControl.Resources>
 
-			<TabItem x:Name="tabItem1" Header="Welcome">
+			<TabItem
+				x:Name="tabItem1"
+				Header="Welcome"
+				IsEnabled="False">
 				<TextBlock TextWrapping="Wrap">Launch button and stuff.</TextBlock>
 			</TabItem>
 			<TabItem
@@ -39,19 +42,19 @@
 				IsSelected="True">
 				<tabs:EPTabUserControl Margin="10" />
 			</TabItem>
-			<TabItem Header="Custom Content">
+			<TabItem Header="Custom Content" IsEnabled="False">
 				<TextBlock TextWrapping="Wrap">Select custom content.</TextBlock>
 			</TabItem>
-			<TabItem Header="Scripting Mods">
+			<TabItem Header="Scripting Mods" IsEnabled="False">
 				<TextBlock TextWrapping="Wrap">Select scripting mods.</TextBlock>
 			</TabItem>
-			<TabItem Header="Setup">
+			<TabItem Header="Setup" IsEnabled="False">
 				<TextBlock TextWrapping="Wrap">Locate the game and DLC packs.</TextBlock>
 			</TabItem>
-			<TabItem Header="Control">
+			<TabItem Header="Control" IsEnabled="False">
 				<TextBlock TextWrapping="Wrap">Perform actions, like installing the superpatch, cleaning saves, and clearing cache.</TextBlock>
 			</TabItem>
-			<TabItem Header="Settings">
+			<TabItem Header="Settings" IsEnabled="False">
 				<TextBlock TextWrapping="Wrap">Change launcher settings.</TextBlock>
 			</TabItem>
 

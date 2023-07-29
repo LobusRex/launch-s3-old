@@ -7,25 +7,27 @@ namespace LobuS3Launcher
 {
 	class Launcher
 	{
-		public static readonly string gamePath = @"D:\Programs\Electronic Arts\The Sims 3\Game\Bin";
-		private static readonly string oldGame = "TS3W.exe";
-		private static readonly string newGame = "TS3L.exe";
+		public static string GamePath { get; } = @"D:\Programs\Electronic Arts\The Sims 3\Game\Bin";
+		public static string OldGame { get; } = "TS3W.exe";
+		public static string NewGame { get; } = "TS3L.exe";
 
 		private static readonly int startupAffinity = 0b1;
 		private static readonly int startupDelayMs = 5000;
 
 		public static void SingleCoreLaunch()
 		{
+			// The launch needs a separate thread because the intel CPU fix sleeps for five seconds.
 			Thread thread = new Thread(new ThreadStart(SingleCoreLaunchThread));
 			thread.Start();
 		}
 
 		private static void SingleCoreLaunchThread()
 		{
-			string newGamePath = Path.Combine(gamePath, newGame);
-			string oldGamePath = Path.Combine(gamePath, oldGame);
+			string newGamePath = Path.Combine(GamePath, NewGame);
+			string oldGamePath = Path.Combine(GamePath, OldGame);
 
 			// Select which TS3*.exe to run.
+			// TODO: Also check the registry for "SimL\The Sims 3".
 			string TS3Path = File.Exists(newGamePath) ? newGamePath : oldGamePath;
 			
 			Trace.WriteLine("Starting " + TS3Path);
@@ -36,7 +38,6 @@ namespace LobuS3Launcher
 			// Start the game.
 			try
 			{
-				// Start the game.
 				Trace.WriteLine(ts3.Start() ? "Started" : "Not started");
 			}
 			catch
