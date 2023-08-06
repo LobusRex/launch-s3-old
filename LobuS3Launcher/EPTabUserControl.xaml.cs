@@ -54,11 +54,13 @@ namespace LobuS3Launcher.Tabs
 			UpdateCheckBoxes();
 		}
 		
-		public void UpdateCheckBoxes()
+		private void UpdateCheckBoxes()
 		{
 			// Check if SimL and TS3L.exe exist.
-			bool LRegistryExists = MachineRegistry.KeyExists(MachineRegistry.SimsKey, MachineRegistry.BaseGameKey);
+			bool LRegistryExists = MachineRegistry.KeyExists(MachineRegistry.SimLKey, MachineRegistry.BaseGameKey);
 			bool LGameExists = File.Exists(Path.Combine(Launcher.GamePath, Launcher.NewGame));
+
+			bool IsLComplete = LRegistryExists && LGameExists;
 
 			foreach (ExpansionPack expansion in expansionPacks)
 			{
@@ -66,24 +68,16 @@ namespace LobuS3Launcher.Tabs
 				bool EPExists = MachineRegistry.KeyExists(MachineRegistry.SimsKey, expansion.GameKey);
 				bool EPActive = MachineRegistry.KeyExists(MachineRegistry.SimLKey, expansion.GameKey);
 
-				// Determin if this check box should be enabled and checked.
-				bool enable = LRegistryExists && LGameExists && EPExists;
-				bool active = LRegistryExists && LGameExists && EPActive;
+				// Determine if this check box should be enabled and checked.
+				bool enable = IsLComplete && EPExists;
+				bool check = IsLComplete && EPActive;
 
 				// Update the check box.
-                if (expansion.CheckBox.Dispatcher.CheckAccess())
-                {
-					expansion.CheckBox.IsEnabled = enable;
-					expansion.SetCheckBoxChecked(active);
-				}
-				else
+				Dispatcher.Invoke(() =>
 				{
-					Dispatcher.Invoke(() =>
-					{
-						expansion.CheckBox.IsEnabled = enable;
-						expansion.SetCheckBoxChecked(active);
-					});
-				}
+					expansion.CheckBox.IsEnabled = enable;
+					expansion.SetCheckBoxChecked(check);
+				});
 			}
 		}
 
@@ -151,7 +145,7 @@ namespace LobuS3Launcher.Tabs
 				CheckBox.Unchecked += CheckBox_Unchecked;
 			}
 
-			public void SetCheckBoxChecked(bool active)
+			public void SetCheckBoxChecked(bool check)
 			{
 				// This function makes it possible to change IsChecked without causing an event.
 
@@ -159,7 +153,7 @@ namespace LobuS3Launcher.Tabs
 				CheckBox.Checked -= CheckBox_Checked;
 				CheckBox.Unchecked -= CheckBox_Unchecked;
 
-				CheckBox.IsChecked = active;
+				CheckBox.IsChecked = check;
 
 				// Add checked events back.
 				CheckBox.Checked += CheckBox_Checked;
