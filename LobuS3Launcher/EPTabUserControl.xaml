@@ -6,38 +6,41 @@
 	xmlns:local="clr-namespace:LobuS3Launcher.Tabs"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d">
-	<StackPanel>
+	<GroupBox Header="Expansion Packs">
+		<StackPanel>
 
-		<TextBlock TextWrapping="Wrap">Select expansion packs.</TextBlock>
+			<TextBlock TextWrapping="Wrap">Select expansion packs.</TextBlock>
 
-		<CheckBox x:Name="EP01CheckBox" IsEnabled="False">World Adventures</CheckBox>
-		<CheckBox x:Name="EP02CheckBox" IsEnabled="False">Ambitions</CheckBox>
-		<CheckBox x:Name="EP03CheckBox" IsEnabled="False">Late Night</CheckBox>
-		<CheckBox x:Name="EP04CheckBox" IsEnabled="False">Generations</CheckBox>
-		<CheckBox x:Name="EP05CheckBox" IsEnabled="False">Pets</CheckBox>
-		<CheckBox x:Name="EP06CheckBox" IsEnabled="False">Showtime</CheckBox>
-		<CheckBox x:Name="EP07CheckBox" IsEnabled="False">Supernatural</CheckBox>
-		<CheckBox x:Name="EP08CheckBox" IsEnabled="False">Seasons</CheckBox>
-		<CheckBox x:Name="EP09CheckBox" IsEnabled="False">University Life</CheckBox>
-		<CheckBox x:Name="EP10CheckBox" IsEnabled="False">Island Paradise</CheckBox>
-		<CheckBox x:Name="EP11CheckBox" IsEnabled="False">Into the Future</CheckBox>
+			<CheckBox x:Name="EP01CheckBox" IsEnabled="False">World Adventures</CheckBox>
+			<CheckBox x:Name="EP02CheckBox" IsEnabled="False">Ambitions</CheckBox>
+			<CheckBox x:Name="EP03CheckBox" IsEnabled="False">Late Night</CheckBox>
+			<CheckBox x:Name="EP04CheckBox" IsEnabled="False">Generations</CheckBox>
+			<CheckBox x:Name="EP05CheckBox" IsEnabled="False">Pets</CheckBox>
+			<CheckBox x:Name="EP06CheckBox" IsEnabled="False">Showtime</CheckBox>
+			<CheckBox x:Name="EP07CheckBox" IsEnabled="False">Supernatural</CheckBox>
+			<CheckBox x:Name="EP08CheckBox" IsEnabled="False">Seasons</CheckBox>
+			<CheckBox x:Name="EP09CheckBox" IsEnabled="False">University Life</CheckBox>
+			<CheckBox x:Name="EP10CheckBox" IsEnabled="False">Island Paradise</CheckBox>
+			<CheckBox x:Name="EP11CheckBox" IsEnabled="False">Into the Future</CheckBox>
 
-		<Button
-			x:Name="enableEPButton"
-			MinWidth="{Binding Path=ActualWidth, ElementName=disableEPButton}"
-			Margin="0,10,0,0"
-			HorizontalAlignment="Left"
-			Click="EnableEPButton_Click">
-			Enable EP Selection
-		</Button>
-		<Button
-			x:Name="disableEPButton"
-			MinWidth="{Binding Path=ActualWidth, ElementName=enableEPButton}"
-			Margin="0,10,0,0"
-			HorizontalAlignment="Left"
-			Click="DisableEPButton_Click">
-			Disable EP Selection
-		</Button>
+			<Button
+				x:Name="enableEPButton"
+				MinWidth="{Binding Path=ActualWidth, ElementName=disableEPButton}"
+				Margin="0,10,0,0"
+				HorizontalAlignment="Left"
+				Click="EnableEPButton_Click">
+				Enable EP Selection
+			</Button>
 
-	</StackPanel>
+			<Button
+				x:Name="disableEPButton"
+				MinWidth="{Binding Path=ActualWidth, ElementName=enableEPButton}"
+				Margin="0,10,0,0"
+				HorizontalAlignment="Left"
+				Click="DisableEPButton_Click">
+				Disable EP Selection
+			</Button>
+
+		</StackPanel>
+	</GroupBox>
 </UserControl>

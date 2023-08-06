@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModernWpf;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -24,27 +25,6 @@ namespace LobuS3Launcher
 		public MainWindow()
 		{
 			InitializeComponent();
-
-			Loaded += MainWindow_Loaded;
-			tabControl.SelectionChanged += TabControl_SelectionChanged;
-		}
-
-		private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-		{
-			FixExtraSpaceWidth();
-		}
-
-		private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if (e.Source is TabControl)
-			{
-				FixExtraSpaceWidth();
-			}
-		}
-
-		private void FixExtraSpaceWidth()
-		{
-			extraSpace.Width = MathF.Min((float)tabItem1.ActualWidth, (float)tabItem2.ActualWidth);
 		}
 
 		private void LaunchButton_Click(object sender, RoutedEventArgs e)

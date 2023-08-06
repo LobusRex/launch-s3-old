@@ -6,78 +6,74 @@
 	xmlns:local="clr-namespace:LobuS3Launcher"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:tabs="clr-namespace:LobuS3Launcher.Tabs"
+	xmlns:ui="http://schemas.modernwpf.com/2019"
 	Title="Lobus S3 Launcher"
 	Width="550"
-	Height="400"
+	Height="600"
+	ui:ThemeManager.IsThemeAware="True"
+	ui:WindowHelper.UseModernWindowStyle="True"
 	mc:Ignorable="d">
-
 	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="*" />
-			<ColumnDefinition Width="Auto" />
-		</Grid.ColumnDefinitions>
+		<TabControl VerticalAlignment="Stretch" TabStripPlacement="Left">
 
-		<TabControl
-			x:Name="tabControl"
-			Grid.Column="0"
-			Margin="10"
-			Panel.ZIndex="7"
-			TabStripPlacement="Left">
+			<ui:TabControlHelper.TabStripHeader>
+				<Button
+					x:Name="launchButton"
+					Margin="10"
+					Click="LaunchButton_Click">
+					Launch The Sims 3
+				</Button>
+			</ui:TabControlHelper.TabStripHeader>
 
-			<TabControl.Resources>
-				<Style TargetType="TabPanel">
-					<Setter Property="VerticalAlignment" Value="Bottom" />
-				</Style>
-			</TabControl.Resources>
-
-			<TabItem
-				x:Name="tabItem1"
-				Header="Welcome"
-				IsEnabled="False">
-				<TextBlock TextWrapping="Wrap">Launch button and stuff.</TextBlock>
+			<TabItem x:Name="tabItem1" Header="Welcome">
+				<StackPanel>
+					<GroupBox Margin="20,0">
+						<TextBlock TextWrapping="Wrap">This is Lobus' Sims 3 Launcher!</TextBlock>
+					</GroupBox>
+				</StackPanel>
 			</TabItem>
 			<TabItem
 				x:Name="tabItem2"
 				Header="Expansions"
-				IsSelected="True">
-				<tabs:EPTabUserControl Margin="10" />
+				Selector.IsSelected="True">
+				<tabs:EPTabUserControl Margin="20,0" />
 			</TabItem>
-			<TabItem Header="Custom Content" IsEnabled="False">
-				<TextBlock TextWrapping="Wrap">Select custom content.</TextBlock>
+			<TabItem x:Name="tabItem3" Header="Custom Content">
+				<StackPanel Margin="20,0">
+					<GroupBox>
+						<TextBlock TextWrapping="Wrap">Select custom content.</TextBlock>
+					</GroupBox>
+				</StackPanel>
 			</TabItem>
-			<TabItem Header="Scripting Mods" IsEnabled="False">
-				<TextBlock TextWrapping="Wrap">Select scripting mods.</TextBlock>
+			<TabItem x:Name="tabItem4" Header="Scripting Mods">
+				<StackPanel Margin="20,0">
+					<GroupBox>
+						<TextBlock TextWrapping="Wrap">Select scripting mods.</TextBlock>
+					</GroupBox>
+				</StackPanel>
 			</TabItem>
-			<TabItem Header="Setup" IsEnabled="False">
-				<TextBlock TextWrapping="Wrap">Locate the game and DLC packs.</TextBlock>
+			<TabItem x:Name="tabItem5" Header="Setup">
+				<StackPanel Margin="20,0">
+					<GroupBox>
+						<TextBlock TextWrapping="Wrap">Locate the game and DLC packs.!</TextBlock>
+					</GroupBox>
+				</StackPanel>
 			</TabItem>
-			<TabItem Header="Control" IsEnabled="False">
-				<TextBlock TextWrapping="Wrap">Perform actions, like installing the superpatch, cleaning saves, and clearing cache.</TextBlock>
+			<TabItem x:Name="tabItem6" Header="Actions">
+				<StackPanel Margin="20,0">
+					<GroupBox>
+						<TextBlock TextWrapping="Wrap">Perform actions, like installing the superpatch, cleaning saves, and clearing cache.</TextBlock>
+					</GroupBox>
+				</StackPanel>
 			</TabItem>
-			<TabItem Header="Settings" IsEnabled="False">
-				<TextBlock TextWrapping="Wrap">Change launcher settings.</TextBlock>
+			<TabItem x:Name="tabItem7" Header="Settings">
+				<StackPanel Margin="20,0">
+					<GroupBox>
+						<TextBlock TextWrapping="Wrap">Change launcher settings.</TextBlock>
+					</GroupBox>
+				</StackPanel>
 			</TabItem>
 
 		</TabControl>
-
-		<Grid
-			x:Name="extraSpace"
-			Grid.Column="0"
-			Margin="10,10,0,0"
-			HorizontalAlignment="Left">
-			<StackPanel
-				Margin="0,0,5,0"
-				HorizontalAlignment="Stretch"
-				VerticalAlignment="Top"
-				Orientation="Vertical">
-				<Button
-					x:Name="LaunchButton"
-					HorizontalAlignment="Stretch"
-					Click="LaunchButton_Click"
-					Content="Launch Sims 3" />
-				<Label>version 1.67...</Label>
-				<!--  add extra space controls here...  -->
-			</StackPanel>
-		</Grid>
 	</Grid>
 </Window>
