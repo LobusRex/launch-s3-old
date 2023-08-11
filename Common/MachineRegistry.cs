@@ -18,6 +18,16 @@ namespace Common
 		public static string SimLKey { get; } = "SimL";
 		public static string BaseGameKey { get; } = "The Sims 3";
 
+		public static string GetBaseBinPath()
+		{
+			using RegistryKey gameKey = Registry.LocalMachine.OpenSubKey(GetFullKey(SimsKey, BaseGameKey)) ?? throw new RegistryKeyNotFoundException();
+
+			string name = "ExePath";
+			object value = gameKey.GetValue(name) ?? throw new RegistryKeyNotFoundException();
+			
+			return ((string)value).Replace(@"\TS3.exe", "");
+		}
+
 		public static string GetFullKey(string simsKey, string gameKey)
 		{
 			return Path.Combine(SoftwarePath, simsKey, gameKey);
@@ -30,12 +40,17 @@ namespace Common
 
 		public static bool KeyExists(string simKey, string gameKey)
 		{
-			// Open the key.
-			string key = GetFullKey(simKey, gameKey);
-			using RegistryKey? regKey = Registry.LocalMachine.OpenSubKey(key);
+			try
+			{
+				// Open the key.
+				string key = GetFullKey(simKey, gameKey);
+				using RegistryKey? regKey = Registry.LocalMachine.OpenSubKey(key);
 
-			// The key exists if regKey is not null.
-			return regKey != null;
+				// The key exists if regKey is not null.
+				return regKey != null;
+			}
+			catch
+			{ return false; }
 		}
 
 		// Inspired by a question and answer from Stack Overflow.
@@ -45,7 +60,7 @@ namespace Common
 		public static void CopyKey(string fromSimKey, string toSimKey, string gameKey)
 		{
 			// Open the old key.
-			using RegistryKey? fromKey = Registry.LocalMachine.OpenSubKey(GetFullKey(fromSimKey, gameKey));
+			using RegistryKey fromKey = Registry.LocalMachine.OpenSubKey(GetFullKey(fromSimKey, gameKey)) ?? throw new RegistryKeyNotFoundException();
 
 			// Create a new key.
 			using RegistryKey toKey = Registry.LocalMachine.CreateSubKey(GetFullKey(toSimKey, gameKey));
@@ -53,7 +68,10 @@ namespace Common
 			// Copy the values.
 			foreach (string name in fromKey.GetValueNames())
 			{
-				toKey.SetValue(name, fromKey.GetValue(name), fromKey.GetValueKind(name));
+				object? value = fromKey.GetValue(name);
+
+				if (value != null)
+					toKey.SetValue(name, value, fromKey.GetValueKind(name));
 			}
 		}
 

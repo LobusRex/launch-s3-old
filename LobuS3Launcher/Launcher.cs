@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -7,7 +8,6 @@ namespace LobuS3Launcher
 {
 	class Launcher
 	{
-		public static string GamePath { get; } = @"D:\Programs\Electronic Arts\The Sims 3\Game\Bin";
 		public static string OldGame { get; } = "TS3W.exe";
 		public static string NewGame { get; } = "TS3L.exe";
 
@@ -23,8 +23,21 @@ namespace LobuS3Launcher
 
 		private static void SingleCoreLaunchThread()
 		{
-			string newGamePath = Path.Combine(GamePath, NewGame);
-			string oldGamePath = Path.Combine(GamePath, OldGame);
+			// Get the path to the base game installation.
+			string baseGamePath;
+			try
+			{
+				baseGamePath = MachineRegistry.GetBaseBinPath();
+			}
+			catch (RegistryKeyNotFoundException)
+			{
+				ErrorBox.Show("Unable to get the game location from the Windows Registry.");
+				return;
+			}
+			
+
+			string newGamePath = Path.Combine(baseGamePath, NewGame);
+			string oldGamePath = Path.Combine(baseGamePath, OldGame);
 
 			// Select which TS3*.exe to run.
 			// TODO: Also check the registry for "SimL\The Sims 3".
