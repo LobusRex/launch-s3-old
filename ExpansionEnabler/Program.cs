@@ -11,8 +11,6 @@ namespace ExpansionEnabler
 {
 	internal class Program
 	{
-		private static readonly string oldGame = "TS3W.exe";
-		private static readonly string newGame = "TS3L.exe";
 		private static readonly string oldTarget = @"Software\Sims";
 		private static readonly string newTarget = @"Software\SimL";
 
@@ -49,13 +47,13 @@ namespace ExpansionEnabler
 
 				// Create the new game TS3L.exe.
 				CreateTS3L(gamePath);
-				Log("Created " + Path.Combine(gamePath, newGame));
+				Log("Created " + Path.Combine(gamePath, GameDirectory.NewGame));
 			}
 			else if (task.ToLower() == "disable")
 			{
 				// Delete the new game TS3L.exe.
 				DeleteTS3L(gamePath);
-				Log("Deleted " + Path.Combine(gamePath, newGame));
+				Log("Deleted " + Path.Combine(gamePath, GameDirectory.NewGame));
 
 				// Delete the new registry key SimL.
 				MachineRegistry.DeleteKey(MachineRegistry.SimLKey);
@@ -70,8 +68,8 @@ namespace ExpansionEnabler
 
 		private static void CreateTS3L(string gamePath)
 		{
-			string newGamePath = Path.Combine(gamePath, newGame);
-			string oldGamePath = Path.Combine(gamePath, oldGame);
+			string newGamePath = Path.Combine(gamePath, GameDirectory.NewGame);
+			string oldGamePath = Path.Combine(gamePath, GameDirectory.OldGame);
 
 			// Translate "Software\Sims" and "Software\SimL to bytes"
 			byte[] oldTargetBytes = Encoding.UTF8.GetBytes(oldTarget);
@@ -90,7 +88,7 @@ namespace ExpansionEnabler
 		private static void DeleteTS3L(string gamePath)
 		{
 			// Delete TS3L.exe.
-			string newGamePath = Path.Combine(gamePath, newGame);
+			string newGamePath = Path.Combine(gamePath, GameDirectory.NewGame);
 			File.Delete(newGamePath);
 		}
 

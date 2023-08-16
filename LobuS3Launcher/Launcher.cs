@@ -8,9 +8,6 @@ namespace LobuS3Launcher
 {
 	class Launcher
 	{
-		public static string OldGame { get; } = "TS3W.exe";
-		public static string NewGame { get; } = "TS3L.exe";
-
 		private static readonly int startupAffinity = 0b1;
 		private static readonly int startupDelayMs = 5000;
 
@@ -34,10 +31,9 @@ namespace LobuS3Launcher
 				ErrorBox.Show("Unable to get the game location from the Windows Registry.");
 				return;
 			}
-			
 
-			string newGamePath = Path.Combine(baseGamePath, NewGame);
-			string oldGamePath = Path.Combine(baseGamePath, OldGame);
+			string newGamePath = Path.Combine(baseGamePath, GameDirectory.NewGame);
+			string oldGamePath = Path.Combine(baseGamePath, GameDirectory.OldGame);
 
 			// Select which TS3*.exe to run.
 			// TODO: Also check the registry for "SimL\The Sims 3".

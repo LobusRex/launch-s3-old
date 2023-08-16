@@ -36,7 +36,7 @@
 				x:Name="tabItem2"
 				Header="Expansions"
 				Selector.IsSelected="True">
-				<tabs:EPTabUserControl Margin="20,0" />
+				<tabs:EPTabUserControl x:Name="EPTab" Margin="20,0" />
 			</TabItem>
 			<TabItem x:Name="tabItem3" Header="Custom Content">
 				<StackPanel Margin="20,0">
@@ -59,12 +59,8 @@
 					</GroupBox>
 				</StackPanel>
 			</TabItem>
-			<TabItem x:Name="tabItem6" Header="Actions">
-				<StackPanel Margin="20,0">
-					<GroupBox>
-						<TextBlock TextWrapping="Wrap">Perform actions, like installing the superpatch, cleaning saves, and clearing cache.</TextBlock>
-					</GroupBox>
-				</StackPanel>
+			<TabItem x:Name="tabItemActions" Header="Actions">
+				<tabs:ActionsTabUserControl Margin="20,0" />
 			</TabItem>
 			<TabItem x:Name="tabItem7" Header="Settings">
 				<StackPanel Margin="20,0">

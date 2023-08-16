@@ -27,6 +27,8 @@ namespace LobuS3Launcher.Tabs
 	{
 		private readonly List<ExpansionPack> expansionPacks;
 
+		public TabItem? TabItemActions { get; set; } = null;
+
 		public EPTabUserControl()
 		{
 			InitializeComponent();
@@ -54,41 +56,29 @@ namespace LobuS3Launcher.Tabs
 			UpdateCheckBoxes();
 		}
 
-		public static bool GetEPSelectionEnabled()
+		private void Hyperlink_Click(object sender, RoutedEventArgs e)
 		{
-			// EP Selection is considered enabled if both the "SimL\The Sims 3" registry key and TS3L.exe exist.
-
-			// Check if the SimL registry key exists.
-			bool SimLExists = MachineRegistry.KeyExists(MachineRegistry.SimLKey, MachineRegistry.BaseGameKey);
-
-			// Get the path to the base game.
-			string baseGamePath;
 			try
 			{
-				baseGamePath = MachineRegistry.GetBaseBinPath();
+				TabItem tabItem = (TabItem)Parent;
+				TabControl tabControl = (TabControl)tabItem.Parent;
+
+				Dispatcher.BeginInvoke((Action)(() => tabControl.SelectedItem = TabItemActions));
 			}
-			catch
-			{ return false; }
-
-			// Check if TS3L.exe exists.
-			bool TS3LExists = File.Exists(Path.Combine(baseGamePath, Launcher.NewGame));
-
-			return SimLExists && TS3LExists;
+			catch { return; }
 		}
 
 		private void UpdateCheckBoxes()
 		{
-			bool EPSelectionEnabled = GetEPSelectionEnabled();
+			bool EPSelectionEnabled = EPSelectionManager.GetSelectionEnabled();
 
 			foreach (ExpansionPack expansion in expansionPacks)
 			{
-				// Check if this expansion has sub keys in Sims and SimL.
-				bool EPExists = MachineRegistry.KeyExists(MachineRegistry.SimsKey, expansion.GameKey);
-				bool EPActive = MachineRegistry.KeyExists(MachineRegistry.SimLKey, expansion.GameKey);
+				string gameKey = expansion.GameKey;
 
 				// Determine if this check box should be enabled and checked.
-				bool enable = EPSelectionEnabled && EPExists;
-				bool check = EPSelectionEnabled && EPActive;
+				bool enable = EPSelectionEnabled && EPSelectionManager.GetInstalled(gameKey);
+				bool check = EPSelectionEnabled && EPSelectionManager.GetSelected(gameKey);
 
 				// Update the check box.
 				Dispatcher.Invoke(() =>
@@ -99,67 +89,6 @@ namespace LobuS3Launcher.Tabs
 			}
 		}
 
-		private void EnableEPButton_Click(object sender, RoutedEventArgs e)
-		{
-			SetEPSelectionEnabled(true, true, true);
-		}
-
-		private void DisableEPButton_Click(object sender, RoutedEventArgs e)
-		{
-			SetEPSelectionEnabled(false, true, true);
-		}
-
-		private void SetEPSelectionEnabled(bool enable, bool elevated, bool hideWindow)
-		{
-			// Get the path to the base game installation.
-			string baseGamePath;
-			try
-			{
-				baseGamePath = MachineRegistry.GetBaseBinPath();
-			}
-			catch (RegistryKeyNotFoundException)
-			{
-				ErrorBox.Show("Unable to get the game location from the Windows Registry.");
-				return;
-			}
-
-			// Create the expansion enabler process.
-			Process process = new Process();
-			process.StartInfo.FileName = "ExpansionEnabler.exe";
-
-			process.StartInfo.ArgumentList.Add(enable ? "enable" : "disable");
-			process.StartInfo.ArgumentList.Add(baseGamePath);
-
-			// Run as administrator.
-			if (elevated)
-			{
-				process.StartInfo.Verb = "runas";
-				process.StartInfo.UseShellExecute = true;
-			}
-
-			// Hide the console window.
-			if (hideWindow)
-			{
-				process.StartInfo.ArgumentList.Add("quiet");
-				process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-			}
-
-			// Start the process.
-			try
-			{
-				process.Start();
-			}
-			catch { }
-
-			// Add an event to occur when the process is finished.
-			process.EnableRaisingEvents = true;
-			process.Exited += Process_Exited;
-		}
-
-		private void Process_Exited(object? sender, EventArgs e)
-		{
-			UpdateCheckBoxes();
-		}
 
 		private class ExpansionPack
 		{
@@ -192,10 +121,9 @@ namespace LobuS3Launcher.Tabs
 
 			private void CheckBox_Checked(object sender, RoutedEventArgs e)
 			{
-				// Copy the expansion key to SimL when the box is checked.
 				try
 				{
-					MachineRegistry.CopyKey(MachineRegistry.SimsKey, MachineRegistry.SimLKey, GameKey);
+					EPSelectionManager.Select(GameKey);
 				}
 				catch (RegistryKeyNotFoundException)
 				{
@@ -206,8 +134,7 @@ namespace LobuS3Launcher.Tabs
 
 			private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
 			{
-				// Remove the expansion key from SimL when the box is unchecked.
-				MachineRegistry.DeleteKey(MachineRegistry.SimLKey, GameKey);
+				EPSelectionManager.Deselect(GameKey);
 			}
 		}
 	}

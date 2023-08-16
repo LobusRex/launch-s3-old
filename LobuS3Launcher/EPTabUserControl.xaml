@@ -23,23 +23,11 @@
 			<CheckBox x:Name="EP10CheckBox" IsEnabled="False">Island Paradise</CheckBox>
 			<CheckBox x:Name="EP11CheckBox" IsEnabled="False">Into the Future</CheckBox>
 
-			<Button
-				x:Name="enableEPButton"
-				MinWidth="{Binding Path=ActualWidth, ElementName=disableEPButton}"
-				Margin="0,10,0,0"
-				HorizontalAlignment="Left"
-				Click="EnableEPButton_Click">
-				Enable EP Selection
-			</Button>
-
-			<Button
-				x:Name="disableEPButton"
-				MinWidth="{Binding Path=ActualWidth, ElementName=enableEPButton}"
-				Margin="0,10,0,0"
-				HorizontalAlignment="Left"
-				Click="DisableEPButton_Click">
-				Disable EP Selection
-			</Button>
+			<TextBlock TextWrapping="Wrap">
+				<Hyperlink Click="Hyperlink_Click">
+					Manage expnasion pack selection
+				</Hyperlink>
+			</TextBlock>
 
 		</StackPanel>
 	</GroupBox>
