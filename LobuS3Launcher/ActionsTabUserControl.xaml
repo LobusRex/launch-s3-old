@@ -40,6 +40,32 @@
 				</StackPanel>
 			</GroupBox>
 
+			<GroupBox Header="Backup saves">
+				<StackPanel>
+					<Button
+						x:Name="backupButton"
+						Margin="0,10,0,0"
+						HorizontalAlignment="Left"
+						Click="BackupButton_Click">
+						Create backup
+					</Button>
+					<Button
+						x:Name="backupSavesButton"
+						Margin="0,10,0,0"
+						HorizontalAlignment="Left"
+						Click="BackupSavesButton_Click">
+						Open backup directory
+					</Button>
+					<Button
+						x:Name="activeSavesButton"
+						Margin="0,10,0,0"
+						HorizontalAlignment="Left"
+						Click="ActiveSavesButton_Click">
+						Open save directory
+					</Button>
+				</StackPanel>
+			</GroupBox>
+
 			<GroupBox Header="Other Actions">
 				<TextBlock TextWrapping="Wrap">Perform actions, like installing the superpatch, cleaning saves, and clearing cache.</TextBlock>
 			</GroupBox>
