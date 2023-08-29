@@ -7,42 +7,43 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:ui="http://schemas.modernwpf.com/2019"
 	mc:Ignorable="d">
-	<StackPanel>
-		<GroupBox Header="Expansion Pack Selection">
-			<StackPanel>
-				<TextBlock TextWrapping="Wrap">Enable or disable expansion pack selection.</TextBlock>
+	<ScrollViewer>
+		<StackPanel>
 
-				<Button
-					x:Name="enableEPButton"
-					MinWidth="{Binding Path=ActualWidth, ElementName=disableEPButton}"
-					Margin="0,10,0,0"
-					HorizontalAlignment="Left"
-					Click="EnableEPButton_Click">
-					Enable EP Selection
-				</Button>
+			<GroupBox Header="Expansion Pack Selection">
+				<StackPanel>
+					<TextBlock TextWrapping="Wrap">Enable or disable expansion pack selection.</TextBlock>
 
-				<Button
-					x:Name="disableEPButton"
-					MinWidth="{Binding Path=ActualWidth, ElementName=enableEPButton}"
-					Margin="0,10,0,0"
-					HorizontalAlignment="Left"
-					Click="DisableEPButton_Click">
-					Disable EP Selection
-				</Button>
+					<Button
+						x:Name="enableEPButton"
+						Margin="0,10,0,0"
+						HorizontalAlignment="Left"
+						Click="EnableEPButton_Click">
+						Enable EP Selection
+					</Button>
 
-				<!--<ui:ToggleSwitch Margin="0,20,0,0" IsEnabled="False">
-					TS3L.exe
-				</ui:ToggleSwitch>
+					<Button
+						x:Name="disableEPButton"
+						Margin="0,10,0,0"
+						HorizontalAlignment="Left"
+						Click="DisableEPButton_Click">
+						Disable EP Selection
+					</Button>
 
-				<ui:ToggleSwitch IsEnabled="False">
-					SimL Registry
-				</ui:ToggleSwitch>-->
-			</StackPanel>
-		</GroupBox>
+					<!--<ui:ToggleSwitch Margin="0,20,0,0" IsEnabled="False">
+						TS3L.exe
+					</ui:ToggleSwitch>
 
-		<GroupBox Header="Other Actions">
-			<TextBlock TextWrapping="Wrap">Perform actions, like installing the superpatch, cleaning saves, and clearing cache.</TextBlock>
-		</GroupBox>
-	</StackPanel>
+					<ui:ToggleSwitch IsEnabled="False">
+						SimL Registry
+					</ui:ToggleSwitch>-->
+				</StackPanel>
+			</GroupBox>
 
+			<GroupBox Header="Other Actions">
+				<TextBlock TextWrapping="Wrap">Perform actions, like installing the superpatch, cleaning saves, and clearing cache.</TextBlock>
+			</GroupBox>
+
+		</StackPanel>
+	</ScrollViewer>
 </UserControl>

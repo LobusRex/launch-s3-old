@@ -13,6 +13,9 @@
 				<!--  Other merged dictionaries here  -->
 			</ResourceDictionary.MergedDictionaries>
 			<!--  Other app resources here  -->
+			<Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
+				<Setter Property="MinWidth" Value="180" />
+			</Style>
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>
