@@ -33,12 +33,14 @@
 					</GroupBox>
 				</StackPanel>
 			</TabItem>
+
 			<TabItem
 				x:Name="tabItem2"
 				Header="Expansions"
 				Selector.IsSelected="True">
 				<tabs:EPTabUserControl x:Name="EPTab" Margin="20,0" />
 			</TabItem>
+
 			<TabItem x:Name="tabItem3" Header="Custom Content">
 				<StackPanel Margin="20,0">
 					<GroupBox>
@@ -46,13 +48,11 @@
 					</GroupBox>
 				</StackPanel>
 			</TabItem>
-			<TabItem x:Name="tabItem4" Header="Scripting Mods">
-				<StackPanel Margin="20,0">
-					<GroupBox>
-						<TextBlock TextWrapping="Wrap">Select scripting mods.</TextBlock>
-					</GroupBox>
-				</StackPanel>
+
+			<TabItem x:Name="tabItem4" Header="Mods">
+				<tabs:ModsTabUserControl Margin="20,0" />
 			</TabItem>
+
 			<TabItem x:Name="tabItem5" Header="Setup">
 				<StackPanel Margin="20,0">
 					<GroupBox>
@@ -60,9 +60,11 @@
 					</GroupBox>
 				</StackPanel>
 			</TabItem>
+
 			<TabItem x:Name="tabItemActions" Header="Actions">
 				<tabs:ActionsTabUserControl Margin="20,0" />
 			</TabItem>
+
 			<TabItem x:Name="tabItem7" Header="Settings">
 				<StackPanel Margin="20,0">
 					<GroupBox>

@@ -19,8 +19,8 @@ namespace Common
 		{
 			Path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-			Game = new DocumentFolder(System.IO.Path.Combine(Path, @"Electronic Arts\The Sims 3"), "Saves");
-			Launcher = new DocumentFolder(System.IO.Path.Combine(Path, "LobuS3Launcher"), "Saves");
+			Game = new DocumentFolder(System.IO.Path.Combine(Path, @"Electronic Arts\The Sims 3"), "Saves", @"Mods\Packages");
+			Launcher = new DocumentFolder(System.IO.Path.Combine(Path, "LobuS3Launcher"), "Saves", "Mods");
 		}
 
 		public static void BackupSaves()
@@ -44,6 +44,7 @@ namespace Common
 			{
 				if (dir.Extension == ".backup")
 					continue;
+
 				RecursiveSaveBackup(dir.FullName, target.CreateSubdirectory(dir.Name).FullName);
 			}
 
@@ -54,10 +55,11 @@ namespace Common
 
 		public class DocumentFolder
 		{
-			public string Path { get; private set; } = "";
-			public string SavePath { get; private set; } = "";
+			public string Path { get; private set; }
+			public string SavePath { get; private set; }
+			public string ModPath { get; private set; }
 
-			public DocumentFolder(string path, string saveFolder)
+			public DocumentFolder(string path, string saveFolder, string modFolder)
 			{
 				if (path == null)
 					throw new ArgumentNullException(nameof(path));
@@ -65,8 +67,12 @@ namespace Common
 				if (saveFolder == null)
 					throw new ArgumentNullException(nameof(saveFolder));
 
+				if (modFolder == null)
+					throw new ArgumentNullException(nameof(saveFolder));
+
 				Path = path;
 				SavePath = System.IO.Path.Combine(path, saveFolder);
+				ModPath = System.IO.Path.Combine(path, modFolder); ;
 			}
 		} 
 	}
