@@ -37,45 +37,17 @@ namespace LobuS3Launcher.Tabs
 
 		private void UpdateCheckBoxes()
 		{
+			// Get all available mods.
+			Dictionary<string, bool> mods = ModSelectionManager.GetAvailableAndSelected();
+
+			// Create a CheckBox for each mod.
 			List<CheckBox> checkBoxes = new List<CheckBox>();
-
-			DirectoryInfo launcherModsFolder = new DirectoryInfo(DocumentFolders.Launcher.ModPath);
-			DirectoryInfo gameModsFolder = new DirectoryInfo(DocumentFolders.Game.ModPath);
-
-			// Get the mods from the games folder.
-			foreach (FileInfo file in gameModsFolder.GetFiles("*.package"))
+			foreach (KeyValuePair<string, bool> mod in mods)
 			{
-				// Create a new CheckBox for the mod.
 				checkBoxes.Add(new CheckBox
 				{
-					IsChecked = true,
-					Content = Path.GetFileNameWithoutExtension(file.Name),
-				});
-			}
-
-			// Get additional mods from the launcher folder.
-			foreach (FileInfo file in launcherModsFolder.GetFiles("*.package"))
-			{
-				bool isDuplicate = false;
-
-				for (int i = 0; i < checkBoxes.Count; i++)
-				{
-					CheckBox checkBox = checkBoxes[i];
-
-					if ((string)checkBox.Content == Path.GetFileNameWithoutExtension(file.Name))
-					{
-						isDuplicate = true;
-						break;
-					}
-				}
-
-				if (isDuplicate)
-					continue;
-
-				checkBoxes.Add(new CheckBox
-				{
-					IsChecked = false,
-					Content = Path.GetFileNameWithoutExtension(file.Name),
+					Content = mod.Key,
+					IsChecked = mod.Value,
 				});
 			}
 
@@ -99,14 +71,10 @@ namespace LobuS3Launcher.Tabs
 		{
 			// Get the mod name.
 			CheckBox checkBox = (CheckBox)sender;
-			string name = (string)checkBox.Content + ".package";
+			string name = (string)checkBox.Content;
 
-			// Get mods folders for both game and launcher.
-			string gameFolder = DocumentFolders.Game.ModPath;
-			string launcherFolder = DocumentFolders.Launcher.ModPath;
-
-			// Move the mod to the launcher mods folder.
-			MoveFile(gameFolder, launcherFolder, name);
+			// Deselect the mod.
+			ModSelectionManager.Deselect(name);
 
 			// Update the tab.
 			UpdateCheckBoxes();
@@ -116,29 +84,13 @@ namespace LobuS3Launcher.Tabs
 		{
 			// Get the mod name.
 			CheckBox checkBox = (CheckBox)sender;
-			string name = (string)checkBox.Content + ".package";
+			string name = (string)checkBox.Content;
 
-			// Get mods folders for both game and launcher.
-			string gameFolder = DocumentFolders.Game.ModPath;
-			string launcherFolder = DocumentFolders.Launcher.ModPath;
-
-			// Move the mod to the game mods folder.
-			MoveFile(launcherFolder, gameFolder, name);
+			// Deselect the mod.
+			ModSelectionManager.Select(name);
 
 			// Update the tab.
 			UpdateCheckBoxes();
-		}
-
-		private static void MoveFile(string from, string to, string name)
-		{
-			string fromPath = Path.Combine(from, name);
-			string toPath = Path.Combine(to, name);
-
-			try
-			{
-				File.Move(fromPath, toPath, true);
-			}
-			catch { }
 		}
 	}
 }

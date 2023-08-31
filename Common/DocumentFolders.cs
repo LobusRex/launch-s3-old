@@ -23,6 +23,18 @@ namespace Common
 			Launcher = new DocumentFolder(System.IO.Path.Combine(Path, "LobuS3Launcher"), "Saves", "Mods");
 		}
 
+		public static void MoveFile(string from, string to, string name)
+		{
+			string fromPath = System.IO.Path.Combine(from, name);
+			string toPath = System.IO.Path.Combine(to, name);
+
+			try
+			{
+				File.Move(fromPath, toPath, true);
+			}
+			catch { }
+		}
+
 		public static void BackupSaves()
 		{
 			string backupName = "Backup " + DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss");
