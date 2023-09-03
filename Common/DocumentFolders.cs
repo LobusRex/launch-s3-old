@@ -35,6 +35,29 @@ namespace Common
 			catch { }
 		}
 
+		public static void CopyFile(string from, string to, string name)
+		{
+			string fromPath = System.IO.Path.Combine(from, name);
+			string toPath = System.IO.Path.Combine(to, name);
+
+			try
+			{
+				File.Copy(fromPath, toPath, true);
+			}
+			catch { }
+		}
+
+		public static void DeleteFile(string from, string name)
+		{
+			string path = System.IO.Path.Combine(from, name);
+
+			try
+			{
+				File.Delete(path);
+			}
+			catch { }
+		}
+
 		public static void BackupSaves()
 		{
 			string backupName = "Backup " + DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss");

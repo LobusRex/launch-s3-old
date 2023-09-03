@@ -1,4 +1,5 @@
 ﻿using Common;
+using ModernWpf.Controls;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -61,10 +62,43 @@ namespace LobuS3Launcher.Tabs
 				checkBox.Unchecked += CheckBox_Unchecked;
 			}
 
+			// Add a context menu to all CheckBoxes.
+			foreach (CheckBox checkBox in checkBoxes)
+			{
+				ContextMenu contextMenu = new ContextMenu();
+				checkBox.ContextMenu = contextMenu;
+
+				MenuItem menuDelete = new MenuItem
+				{
+					Header = "Remove",
+					Icon = new SymbolIcon(Symbol.Delete),
+					CommandParameter = checkBox,
+				};
+				menuDelete.Click += MenuDelete_Click;
+				contextMenu.Items.Add(menuDelete);
+			}
+
 			// Add the new CheckBoxes to the window.
 			modsContainer.Children.Clear();
 			foreach (CheckBox checkBox in checkBoxes)
 				modsContainer.Children.Add(checkBox);
+		}
+
+		private void MenuDelete_Click(object sender, RoutedEventArgs e)
+		{
+			if (sender is not MenuItem menuItem)
+				return;
+
+			if (menuItem.CommandParameter is not CheckBox checkBox)
+				return;
+
+			if (checkBox.Content is not string name)
+				return;
+
+			ModSelectionManager.Delete(name);
+
+			// Update the tab.
+			UpdateCheckBoxes();
 		}
 
 		private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
@@ -91,6 +125,24 @@ namespace LobuS3Launcher.Tabs
 
 			// Update the tab.
 			UpdateCheckBoxes();
+		}
+
+		private void AddModButton_Click(object sender, RoutedEventArgs e)
+		{
+			var dialog = new Microsoft.Win32.OpenFileDialog();
+			dialog.DefaultExt = ".package";
+			dialog.Filter = "Package mods |*.package";
+
+			bool? result = dialog.ShowDialog();
+
+			if (result == true)
+			{
+				string filename = dialog.FileName;
+
+				ModSelectionManager.Add(filename);
+
+				UpdateCheckBoxes();
+			}
 		}
 	}
 }

@@ -60,5 +60,32 @@ namespace Common
 			// Move the mod to the launcher mods folder.
 			DocumentFolders.MoveFile(gameMods, launcherMods, packageName);
 		}
+
+		public static void Add(string packagePath)
+		{
+			// Get mods folders for the game.
+			string gameMods = DocumentFolders.Game.ModPath;
+
+			FileInfo file = new FileInfo(packagePath);
+
+			if (file.DirectoryName == null)
+				return;
+
+            // Copy the mod to the game mods folder.
+            DocumentFolders.CopyFile(file.DirectoryName, gameMods, file.Name);
+		}
+
+		public static void Delete(string name)
+		{
+			string packageName = name + ".package";
+
+			// Get mods folders for both game and launcher.
+			string gameMods = DocumentFolders.Game.ModPath;
+			string launcherMods = DocumentFolders.Launcher.ModPath;
+
+			// Delete the mod from both/either mod folder.
+			DocumentFolders.DeleteFile(gameMods, packageName);
+			DocumentFolders.DeleteFile(launcherMods, packageName);
+		}
 	}
 }

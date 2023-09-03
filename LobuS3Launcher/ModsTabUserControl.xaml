@@ -11,9 +11,18 @@
 
 			<GroupBox Header="Package Mods">
 				<StackPanel>
+
 					<TextBlock TextWrapping="Wrap">Select mods.</TextBlock>
 
 					<StackPanel x:Name="modsContainer" />
+
+					<Button
+						x:Name="addModButton"
+						Margin="0,10,0,0"
+						Click="AddModButton_Click">
+						Add mods
+					</Button>
+
 				</StackPanel>
 			</GroupBox>
 
