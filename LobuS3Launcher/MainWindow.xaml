@@ -50,7 +50,7 @@
 			</TabItem>
 
 			<TabItem x:Name="tabItem4" Header="Mods">
-				<tabs:ModsTabUserControl Margin="20,0" />
+				<tabs:ModsTabUserControl x:Name="modsTab" Margin="20,0" />
 			</TabItem>
 
 			<TabItem x:Name="tabItem5" Header="Setup">

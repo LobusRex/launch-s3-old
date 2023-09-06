@@ -23,6 +23,12 @@
 						Add mods
 					</Button>
 
+					<TextBlock TextWrapping="Wrap">
+						<Hyperlink Click="Hyperlink_Click">
+							Manage mod selection
+						</Hyperlink>
+					</TextBlock>
+
 				</StackPanel>
 			</GroupBox>
 

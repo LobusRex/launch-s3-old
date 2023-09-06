@@ -40,6 +40,21 @@
 				</StackPanel>
 			</GroupBox>
 
+			<GroupBox Header="Mod Selection">
+				<StackPanel>
+					<TextBlock TextWrapping="Wrap">Set up script modding. This downloads FrameworkSetup.zip and extracts it into the game Documents directory.</TextBlock>
+
+					<Button
+						x:Name="enableModsButton"
+						Margin="0,10,0,0"
+						HorizontalAlignment="Left"
+						Click="EnableModsButton_Click">
+						Set up modding
+					</Button>
+
+				</StackPanel>
+			</GroupBox>
+
 			<GroupBox Header="Backup saves">
 				<StackPanel>
 					<Button

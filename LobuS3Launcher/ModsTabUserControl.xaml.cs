@@ -24,7 +24,9 @@ namespace LobuS3Launcher.Tabs
     /// </summary>
     public partial class ModsTabUserControl : UserControl
     {
-        public ModsTabUserControl()
+		public TabItem? TabItemActions { get; set; } = null;
+
+		public ModsTabUserControl()
         {
             InitializeComponent();
 
@@ -143,6 +145,21 @@ namespace LobuS3Launcher.Tabs
 
 				UpdateCheckBoxes();
 			}
+		}
+
+		private void Hyperlink_Click(object sender, RoutedEventArgs e)
+		{
+			if (TabItemActions == null)
+				return;
+
+			try
+			{
+				TabItem tabItem = (TabItem)Parent;
+				TabControl tabControl = (TabControl)tabItem.Parent;
+
+				Dispatcher.BeginInvoke((Action)(() => tabControl.SelectedItem = TabItemActions));
+			}
+			catch { return; }
 		}
 	}
 }

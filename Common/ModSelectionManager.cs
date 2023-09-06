@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,8 @@ namespace Common
 {
 	public static class ModSelectionManager
 	{
+		public static string FrameworkSetupUrl { get; set; } = "https://chii.modthesims.info/FrameworkSetup.zip";
+
 		public static Dictionary<string, bool> GetAvailableAndSelected()
 		{
 			Dictionary<string, bool> mods = new Dictionary<string, bool>();
@@ -86,6 +89,50 @@ namespace Common
 			// Delete the mod from both/either mod folder.
 			DocumentFolders.DeleteFile(gameMods, packageName);
 			DocumentFolders.DeleteFile(launcherMods, packageName);
+		}
+
+		public enum DownloadExtractResult
+		{
+			Succeeded,
+			DownloadFailed,
+			ExtractionFailed,
+		}
+
+		public static Task<DownloadExtractResult> EnableSelection()
+		{
+			return DownloadFrameworkSetup();
+		}
+
+		private static async Task<DownloadExtractResult> DownloadFrameworkSetup()
+		{
+			try
+			{
+				// Download FrameworkSetup.zip.
+				using HttpClient HttpClient = new HttpClient();
+				using Stream data = await HttpClient.GetStreamAsync(FrameworkSetupUrl);
+
+				// Extract the archive to the game documents folder.
+				ZipArchive archive = new ZipArchive(data, ZipArchiveMode.Read);
+				archive.ExtractToDirectory(DocumentFolders.Game.Path, true);
+			}
+			catch (Exception e)
+			{
+				if (e is InvalidOperationException ||
+					e is HttpRequestException ||
+					e is TaskCanceledException)
+				{
+					// The Download failed.
+					return DownloadExtractResult.DownloadFailed;
+				}
+				else
+				{
+					// The extraction failed.
+					return DownloadExtractResult.ExtractionFailed;
+				}
+			}
+
+			// The set up was successfull.
+			return DownloadExtractResult.Succeeded;
 		}
 	}
 }

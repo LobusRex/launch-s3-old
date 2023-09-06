@@ -32,6 +32,7 @@ namespace LobuS3Launcher
 		private void MainWindow_Loaded(object sender, RoutedEventArgs e)
 		{
 			EPTab.TabItemActions = tabItemActions;
+			modsTab.TabItemActions = tabItemActions;
 		}
 
 		private void LaunchButton_Click(object sender, RoutedEventArgs e)

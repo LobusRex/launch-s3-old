@@ -83,5 +83,33 @@ namespace LobuS3Launcher.Tabs
 		{
 			Folder.OpenWithExplorer(DocumentFolders.Game.SavePath);
 		}
+
+		private void EnableModsButton_Click(object sender, RoutedEventArgs e)
+		{
+			// Ask the user if they are sure.
+			string message = "Do you want to set up modding? Doing so requires an internet connection to download FrameworkSetup.zip from modthesims.info.";
+			string caption = "Set up modding";
+			MessageBoxImage icon = MessageBoxImage.Question;
+			MessageBoxButton button = MessageBoxButton.YesNoCancel;
+			bool doSetup = MessageBox.Show(message, caption, button, icon).Equals(MessageBoxResult.Yes);
+
+			if (!doSetup)
+				return;
+
+			// Download and extract FrameworkSetup.zip.
+			Task<ModSelectionManager.DownloadExtractResult> download = ModSelectionManager.EnableSelection();
+
+			// Print error messages if anything fails.
+			Task temp = download.ContinueWith(t =>
+			{
+				// The download failed.
+				if (t.Result == ModSelectionManager.DownloadExtractResult.DownloadFailed)
+					ErrorBox.Show($"Unable to download FrameworkSetup.zip from {ModSelectionManager.FrameworkSetupUrl}.");
+
+				// The extraction failed.
+				if (t.Result == ModSelectionManager.DownloadExtractResult.ExtractionFailed)
+					ErrorBox.Show($"Unable to extract FrameworkSetup.zip to {DocumentFolders.Game.Path}.");
+			});
+		}
 	}
 }
