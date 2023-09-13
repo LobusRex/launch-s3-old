@@ -38,7 +38,7 @@
 				x:Name="tabItem2"
 				Header="Expansions"
 				Selector.IsSelected="True">
-				<tabs:EPTabUserControl x:Name="EPTab" Margin="20,0" />
+				<tabs:EPTab x:Name="EPTab" Margin="20,0" />
 			</TabItem>
 
 			<TabItem x:Name="tabItem3" Header="Custom Content">
@@ -50,7 +50,7 @@
 			</TabItem>
 
 			<TabItem x:Name="tabItem4" Header="Mods">
-				<tabs:ModsTabUserControl x:Name="modsTab" Margin="20,0" />
+				<tabs:ModsTab x:Name="modsTab" Margin="20,0" />
 			</TabItem>
 
 			<TabItem x:Name="tabItem5" Header="Setup">
@@ -62,7 +62,7 @@
 			</TabItem>
 
 			<TabItem x:Name="tabItemActions" Header="Actions">
-				<tabs:ActionsTabUserControl Margin="20,0" />
+				<tabs:ActionsTab Margin="20,0" />
 			</TabItem>
 
 			<TabItem x:Name="tabItem7" Header="Settings">

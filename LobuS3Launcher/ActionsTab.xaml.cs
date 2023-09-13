@@ -1,34 +1,24 @@
 ﻿using Common;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 
 namespace LobuS3Launcher.Tabs
 {
 	/// <summary>
-	/// Interaction logic for ActionsTabUserControl.xaml
+	/// Interaction logic for ActionsTab.xaml
 	/// </summary>
-	public partial class ActionsTabUserControl : UserControl
+	public partial class ActionsTab : UserControl
 	{
-		public ActionsTabUserControl()
+		public ActionsTab()
 		{
 			InitializeComponent();
 
-			Loaded += ActionsTabUserControl_Loaded;
+			Loaded += ActionsTab_Loaded;
 		}
 
-		private void ActionsTabUserControl_Loaded(object sender, RoutedEventArgs e)
+		private void ActionsTab_Loaded(object sender, RoutedEventArgs e)
 		{
 			activeSavesButton.IsEnabled = Directory.Exists(DocumentFolders.Game.Path);
 			backupSavesButton.IsEnabled = Directory.Exists(DocumentFolders.Launcher.Path);

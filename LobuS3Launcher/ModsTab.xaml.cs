@@ -2,38 +2,27 @@
 using ModernWpf.Controls;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Markup.Localizer;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 
 namespace LobuS3Launcher.Tabs
 {
     /// <summary>
-    /// Interaction logic for ModsTabUserControl.xaml
+    /// Interaction logic for ModsTab.xaml
     /// </summary>
-    public partial class ModsTabUserControl : UserControl
+    public partial class ModsTab : UserControl
     {
 		public TabItem? TabItemActions { get; set; } = null;
 
-		public ModsTabUserControl()
+		public ModsTab()
         {
             InitializeComponent();
 
-			Loaded += ModsTabUserControl_Loaded;
+			Loaded += ModsTab_Loaded;
         }
 
-		private void ModsTabUserControl_Loaded(object sender, RoutedEventArgs e)
+		private void ModsTab_Loaded(object sender, RoutedEventArgs e)
 		{
 			UpdateCheckBoxes();
 		}

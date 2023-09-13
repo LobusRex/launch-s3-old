@@ -1,35 +1,21 @@
 ﻿using Common;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Diagnostics;
-using System.DirectoryServices;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 
 namespace LobuS3Launcher.Tabs
 {
 	/// <summary>
-	/// Interaction logic for EPTabUserControl.xaml
+	/// Interaction logic for EPTab.xaml
 	/// </summary>
-	public partial class EPTabUserControl : UserControl
+	public partial class EPTab : UserControl
 	{
 		private readonly List<ExpansionPack> expansionPacks;
 
 		public TabItem? TabItemActions { get; set; } = null;
 
-		public EPTabUserControl()
+		public EPTab()
 		{
 			InitializeComponent();
 
@@ -58,6 +44,9 @@ namespace LobuS3Launcher.Tabs
 
 		private void Hyperlink_Click(object sender, RoutedEventArgs e)
 		{
+			if (TabItemActions == null)
+				return;
+
 			try
 			{
 				TabItem tabItem = (TabItem)Parent;
@@ -88,7 +77,6 @@ namespace LobuS3Launcher.Tabs
 				});
 			}
 		}
-
 
 		private class ExpansionPack
 		{

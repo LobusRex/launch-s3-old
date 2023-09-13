@@ -1,5 +1,5 @@
 ﻿<UserControl
-	x:Class="LobuS3Launcher.Tabs.ActionsTabUserControl"
+	x:Class="LobuS3Launcher.Tabs.ActionsTab"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -12,6 +12,7 @@
 
 			<GroupBox Header="Expansion Pack Selection">
 				<StackPanel>
+
 					<TextBlock TextWrapping="Wrap">Enable or disable expansion pack selection.</TextBlock>
 
 					<Button
@@ -37,11 +38,13 @@
 					<ui:ToggleSwitch IsEnabled="False">
 						SimL Registry
 					</ui:ToggleSwitch>-->
+
 				</StackPanel>
 			</GroupBox>
 
 			<GroupBox Header="Mod Selection">
 				<StackPanel>
+
 					<TextBlock TextWrapping="Wrap">Set up script modding. This downloads FrameworkSetup.zip and extracts it into the game Documents directory.</TextBlock>
 
 					<Button
@@ -57,6 +60,7 @@
 
 			<GroupBox Header="Backup saves">
 				<StackPanel>
+
 					<Button
 						x:Name="backupButton"
 						Margin="0,10,0,0"
@@ -64,6 +68,7 @@
 						Click="BackupButton_Click">
 						Create backup
 					</Button>
+
 					<Button
 						x:Name="backupSavesButton"
 						Margin="0,10,0,0"
@@ -71,6 +76,7 @@
 						Click="BackupSavesButton_Click">
 						Open backup directory
 					</Button>
+
 					<Button
 						x:Name="activeSavesButton"
 						Margin="0,10,0,0"
@@ -78,6 +84,7 @@
 						Click="ActiveSavesButton_Click">
 						Open save directory
 					</Button>
+
 				</StackPanel>
 			</GroupBox>
 
