@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Common;
+using System.Windows;
 
 namespace LobuS3Launcher
 {
@@ -22,7 +23,16 @@ namespace LobuS3Launcher
 
 		private void LaunchButton_Click(object sender, RoutedEventArgs e)
 		{
-			Launcher.SingleCoreLaunch();
+			// Get the path to the base game installation.
+			string? baseGamePath = GameDirectory.BaseGamePath;
+			if (baseGamePath == null)
+			{
+				ErrorBox.Show("Unable to get the game location from the Windows Registry.");
+				return;
+			}
+
+			// Launch the game.
+			Launcher.Launch(baseGamePath, true);
 		}
     }
 }

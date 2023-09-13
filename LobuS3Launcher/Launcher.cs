@@ -8,84 +8,76 @@ namespace LobuS3Launcher
 {
 	class Launcher
 	{
-		private static readonly int startupAffinity = 0b1;
-		private static readonly int startupDelayMs = 5000;
-
-		public static void SingleCoreLaunch()
+		/// <summary>
+		/// Launches the game.
+		/// </summary>
+		/// <param name="baseGamePath">The path to the game Bin directory.</param>
+		/// <param name="startSingleCore">Whether or not the game should start
+		/// with the Intel CPU fix.</param>
+		public static void Launch(string baseGamePath, bool startSingleCore)
 		{
-			// The launch needs a separate thread because the intel CPU fix sleeps for five seconds.
-			Thread thread = new Thread(new ThreadStart(SingleCoreLaunchThread));
-			thread.Start();
-		}
-
-		private static void SingleCoreLaunchThread()
-		{
-			// Get the path to the base game installation.
-			string baseGamePath;
-			try
-			{
-				baseGamePath = MachineRegistry.GetBaseBinPath();
-			}
-			catch (RegistryKeyNotFoundException)
-			{
-				ErrorBox.Show("Unable to get the game location from the Windows Registry.");
-				return;
-			}
-
+			// Select which TS3*.exe to run.
+			bool selectionEnabled = EPSelectionManager.GetSelectionEnabled();
 			string newGamePath = Path.Combine(baseGamePath, GameDirectory.NewGame);
 			string oldGamePath = Path.Combine(baseGamePath, GameDirectory.OldGame);
+			string TS3Path = selectionEnabled ? newGamePath : oldGamePath;
 
-			// Select which TS3*.exe to run.
-			// TODO: Also check the registry for "SimL\The Sims 3".
-			string TS3Path = File.Exists(newGamePath) ? newGamePath : oldGamePath;
-			
 			Trace.WriteLine("Starting " + TS3Path);
 
+			// Start the game.
 			Process ts3 = new Process();
 			ts3.StartInfo.FileName = TS3Path;
-
-			// Start the game.
 			try
 			{
-				Trace.WriteLine(ts3.Start() ? "Started" : "Not started");
+				bool started = ts3.Start();
+
+				Trace.WriteLine(started ? "Started" : "Not started");
 			}
 			catch
-			{
-				return;
-			}
+			{ return; }
 
-			// Limit core usage until the game is started.
-			// Inspired by Miaa234's core limiting script.
-			// https://answers.ea.com/t5/Technical-Issues-PC/Sims-3-won-t-open-Alder-Lake-Intel-12th-gen-CPU/td-p/11057820/page/5.
-			// Miaa245 https://answers.ea.com/t5/user/viewprofilepage/user-id/7950707
+			// Help the game start on new Intel processors.
+			if (startSingleCore)
+				new Thread(() => LimitProcessCores(ts3)).Start();
+		}
+
+		// Inspired by Miaa245's core limiting script.
+		// https://answers.ea.com/t5/Technical-Issues-PC/Sims-3-won-t-open-Alder-Lake-Intel-12th-gen-CPU/td-p/11057820/page/5.
+		// Miaa245 https://answers.ea.com/t5/user/viewprofilepage/user-id/7950707
+		/// <summary>
+		/// Limits the number of cores used by a process for a short amount of time.
+		/// </summary>
+		/// <param name="process">The process to limit.</param>
+		private static void LimitProcessCores(Process process)
+		{
+			// The processor affinity used when the game starts.
+			// Each binary digit corresponds to one core.
+			int startupAffinity = 0b1;
+
+			// The duration to limit the processor affinity.
+			int limiterDurationMs = 5000;
+
 			try
 			{
 				// Save core usage and limit to a single core.
-				IntPtr affinity = ts3.ProcessorAffinity;
-				ts3.ProcessorAffinity = new IntPtr(startupAffinity);
+				IntPtr affinity = process.ProcessorAffinity;
+				process.ProcessorAffinity = new IntPtr(startupAffinity);
 
 				// Wait for the game to start.
-				Thread.Sleep(startupDelayMs);
+				Thread.Sleep(limiterDurationMs);
 
-				Trace.WriteLine(ts3.HasExited ? "Not running" : "Running");
+				Trace.WriteLine(process.HasExited ? "Not running" : "Running");
 
 				// Return if the process is turned off. This is the case if multiple instances were launched.
-				if (ts3.HasExited)
+				if (process.HasExited)
 				{
 					return;
 				}
 
 				// Restore previous core usage.
-				ts3.ProcessorAffinity = affinity;
+				process.ProcessorAffinity = affinity;
 			}
-			catch
-			{
-				return;
-			}
-
-			// Kill the game (just for testing)
-			//Thread.Sleep(5000);
-			//ts3.Kill();
+			catch { }
 		}
 	}
 }
