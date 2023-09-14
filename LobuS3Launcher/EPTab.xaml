@@ -7,32 +7,54 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d">
 	<ScrollViewer>
+		<StackPanel>
 
-		<GroupBox Header="Expansion Packs">
-			<StackPanel>
+			<GroupBox Header="Expansion Packs">
+				<StackPanel>
 
-				<TextBlock TextWrapping="Wrap">Select expansion packs.</TextBlock>
+					<TextBlock TextWrapping="Wrap">Select expansion packs.</TextBlock>
 
-				<CheckBox x:Name="EP01CheckBox" IsEnabled="False">World Adventures</CheckBox>
-				<CheckBox x:Name="EP02CheckBox" IsEnabled="False">Ambitions</CheckBox>
-				<CheckBox x:Name="EP03CheckBox" IsEnabled="False">Late Night</CheckBox>
-				<CheckBox x:Name="EP04CheckBox" IsEnabled="False">Generations</CheckBox>
-				<CheckBox x:Name="EP05CheckBox" IsEnabled="False">Pets</CheckBox>
-				<CheckBox x:Name="EP06CheckBox" IsEnabled="False">Showtime</CheckBox>
-				<CheckBox x:Name="EP07CheckBox" IsEnabled="False">Supernatural</CheckBox>
-				<CheckBox x:Name="EP08CheckBox" IsEnabled="False">Seasons</CheckBox>
-				<CheckBox x:Name="EP09CheckBox" IsEnabled="False">University Life</CheckBox>
-				<CheckBox x:Name="EP10CheckBox" IsEnabled="False">Island Paradise</CheckBox>
-				<CheckBox x:Name="EP11CheckBox" IsEnabled="False">Into the Future</CheckBox>
+					<CheckBox x:Name="EP01CheckBox" IsEnabled="False">World Adventures</CheckBox>
+					<CheckBox x:Name="EP02CheckBox" IsEnabled="False">Ambitions</CheckBox>
+					<CheckBox x:Name="EP03CheckBox" IsEnabled="False">Late Night</CheckBox>
+					<CheckBox x:Name="EP04CheckBox" IsEnabled="False">Generations</CheckBox>
+					<CheckBox x:Name="EP05CheckBox" IsEnabled="False">Pets</CheckBox>
+					<CheckBox x:Name="EP06CheckBox" IsEnabled="False">Showtime</CheckBox>
+					<CheckBox x:Name="EP07CheckBox" IsEnabled="False">Supernatural</CheckBox>
+					<CheckBox x:Name="EP08CheckBox" IsEnabled="False">Seasons</CheckBox>
+					<CheckBox x:Name="EP09CheckBox" IsEnabled="False">University Life</CheckBox>
+					<CheckBox x:Name="EP10CheckBox" IsEnabled="False">Island Paradise</CheckBox>
+					<CheckBox x:Name="EP11CheckBox" IsEnabled="False">Into the Future</CheckBox>
 
+				</StackPanel>
+			</GroupBox>
+
+			<GroupBox Header="Stuff Packs">
+				<StackPanel>
+
+					<TextBlock TextWrapping="Wrap">Select stuff packs.</TextBlock>
+
+					<CheckBox x:Name="SP01CheckBox" IsEnabled="False">High-End Loft Stuff</CheckBox>
+					<CheckBox x:Name="SP02CheckBox" IsEnabled="False">Fast Lane Stuff</CheckBox>
+					<CheckBox x:Name="SP03CheckBox" IsEnabled="False">Outdoor Living Stuff</CheckBox>
+					<CheckBox x:Name="SP04CheckBox" IsEnabled="False">Town Life Stuff</CheckBox>
+					<CheckBox x:Name="SP05CheckBox" IsEnabled="False">Master Suite Stuff</CheckBox>
+					<CheckBox x:Name="SP06CheckBox" IsEnabled="False">Katy Perry's Sweet Treats</CheckBox>
+					<CheckBox x:Name="SP07CheckBox" IsEnabled="False">Diesel Stuff</CheckBox>
+					<CheckBox x:Name="SP08CheckBox" IsEnabled="False">70s, 80s, &amp; 90s Stuff</CheckBox>
+					<CheckBox x:Name="SP09CheckBox" IsEnabled="False">Movie Stuff</CheckBox>
+
+				</StackPanel>
+			</GroupBox>
+
+			<GroupBox>
 				<TextBlock TextWrapping="Wrap">
 					<Hyperlink Click="Hyperlink_Click">
 						Manage expnasion pack selection
 					</Hyperlink>
 				</TextBlock>
+			</GroupBox>
 
-			</StackPanel>
-		</GroupBox>
-
+		</StackPanel>
 	</ScrollViewer>
 </UserControl>

@@ -21,6 +21,7 @@ namespace LobuS3Launcher.Tabs
 
 			expansionPacks = new List<ExpansionPack>()
 			{
+				// Expansion Packs
 				new ExpansionPack(EP01CheckBox, "The Sims 3 World Adventures"),
 				new ExpansionPack(EP02CheckBox, "The Sims 3 Ambitions"),
 				new ExpansionPack(EP03CheckBox, "The Sims 3 Late Night"),
@@ -32,6 +33,17 @@ namespace LobuS3Launcher.Tabs
 				new ExpansionPack(EP09CheckBox, "The Sims 3 University Life"),
 				new ExpansionPack(EP10CheckBox, "The Sims 3 Island Paradise"),
 				new ExpansionPack(EP11CheckBox, "The Sims 3 Into The Future"),
+
+				// Stuff Packs
+				new ExpansionPack(SP01CheckBox, "The Sims 3 High-End Loft Stuff"),
+				new ExpansionPack(SP02CheckBox, "The Sims 3 Fast Lane Stuff"),
+				new ExpansionPack(SP03CheckBox, "The Sims 3 Outdoor Living Stuff"),
+				new ExpansionPack(SP04CheckBox, "The Sims 3 Town Life Stuff"),
+				new ExpansionPack(SP05CheckBox, "The Sims 3 Master Suite Stuff"),
+				new ExpansionPack(SP06CheckBox, "The Sims 3 Katy Perry Sweet Treats"),
+				new ExpansionPack(SP07CheckBox, "The Sims 3 Diesel Stuff"),
+				new ExpansionPack(SP08CheckBox, "The Sims 3 70s 80s & 90s Stuff"),
+				new ExpansionPack(SP09CheckBox, "The Sims 3 Movie Stuff"),
 			};
 
 			Loaded += EPTab_Loaded;
@@ -63,17 +75,17 @@ namespace LobuS3Launcher.Tabs
 
 			foreach (ExpansionPack expansion in expansionPacks)
 			{
-				string gameKey = expansion.GameKey;
-
-				// Determine if this check box should be enabled and checked.
-				bool enable = EPSelectionEnabled && EPSelectionManager.GetInstalled(gameKey);
-				bool check = EPSelectionEnabled && EPSelectionManager.GetSelected(gameKey);
-
+				// Determine if this CheckBox should be visible, enabled, and checked.
+				bool isVisible = EPSelectionEnabled;
+				bool isEnabled = EPSelectionManager.GetInstalled(expansion.GameKey);
+				bool isChecked = EPSelectionManager.GetSelected(expansion.GameKey);
+				
 				// Update the check box.
 				Dispatcher.Invoke(() =>
 				{
-					expansion.CheckBox.IsEnabled = enable;
-					expansion.SetCheckBoxChecked(check);
+					expansion.CheckBox.Visibility = isVisible ? Visibility.Visible : Visibility.Collapsed;
+					expansion.CheckBox.IsEnabled = isEnabled;
+					expansion.SetCheckBoxChecked(isChecked);
 				});
 			}
 		}
