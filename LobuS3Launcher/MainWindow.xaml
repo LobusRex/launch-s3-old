@@ -7,7 +7,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:tabs="clr-namespace:LobuS3Launcher.Tabs"
 	xmlns:ui="http://schemas.modernwpf.com/2019"
-	Title="Lobus S3 Launcher"
+	Title="Launch S3"
 	Width="550"
 	Height="600"
 	ui:ThemeManager.IsThemeAware="True"
@@ -26,13 +26,13 @@
 				</Button>
 			</ui:TabControlHelper.TabStripHeader>
 
-			<TabItem x:Name="tabItem1" Header="Welcome">
+			<!--<TabItem x:Name="tabItem1" Header="Welcome">
 				<StackPanel>
 					<GroupBox Margin="20,0">
 						<TextBlock TextWrapping="Wrap">This is Lobus' Sims 3 Launcher!</TextBlock>
 					</GroupBox>
 				</StackPanel>
-			</TabItem>
+			</TabItem>-->
 
 			<TabItem
 				x:Name="tabItem2"
@@ -41,37 +41,37 @@
 				<tabs:EPTab x:Name="EPTab" Margin="20,0" />
 			</TabItem>
 
-			<TabItem x:Name="tabItem3" Header="Custom Content">
+			<!--<TabItem x:Name="tabItem3" Header="Custom Content">
 				<StackPanel Margin="20,0">
 					<GroupBox>
 						<TextBlock TextWrapping="Wrap">Select custom content.</TextBlock>
 					</GroupBox>
 				</StackPanel>
-			</TabItem>
+			</TabItem>-->
 
 			<TabItem x:Name="tabItem4" Header="Mods">
 				<tabs:ModsTab x:Name="modsTab" Margin="20,0" />
 			</TabItem>
 
-			<TabItem x:Name="tabItem5" Header="Setup">
+			<!--<TabItem x:Name="tabItem5" Header="Setup">
 				<StackPanel Margin="20,0">
 					<GroupBox>
 						<TextBlock TextWrapping="Wrap">Locate the game and DLC packs.!</TextBlock>
 					</GroupBox>
 				</StackPanel>
-			</TabItem>
+			</TabItem>-->
 
 			<TabItem x:Name="tabItemActions" Header="Actions">
 				<tabs:ActionsTab Margin="20,0" />
 			</TabItem>
 
-			<TabItem x:Name="tabItem7" Header="Settings">
+			<!--<TabItem x:Name="tabItem7" Header="Settings">
 				<StackPanel Margin="20,0">
 					<GroupBox>
 						<TextBlock TextWrapping="Wrap">Change launcher settings.</TextBlock>
 					</GroupBox>
 				</StackPanel>
-			</TabItem>
+			</TabItem>-->
 
 		</TabControl>
 	</Grid>

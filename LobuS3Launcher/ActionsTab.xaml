@@ -88,9 +88,9 @@
 				</StackPanel>
 			</GroupBox>
 
-			<GroupBox Header="Other Actions">
+			<!--<GroupBox Header="Other Actions">
 				<TextBlock TextWrapping="Wrap">Perform actions, like installing the superpatch, cleaning saves, and clearing cache.</TextBlock>
-			</GroupBox>
+			</GroupBox>-->
 
 		</StackPanel>
 	</ScrollViewer>
