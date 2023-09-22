@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
-using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +22,8 @@ namespace Common
 			using RegistryKey gameKey = Registry.LocalMachine.OpenSubKey(GetFullKey(SimsKey, BaseGameKey)) ?? throw new RegistryKeyNotFoundException();
 
 			string name = "ExePath";
+
+			// TODO: Consider replacing the RegistryKeyNotFoundException with some other exception.
 			object value = gameKey.GetValue(name) ?? throw new RegistryKeyNotFoundException();
 			
 			return ((string)value).Replace(@"\TS3.exe", "");
@@ -104,7 +105,9 @@ namespace Common
 		{
 			// Get the "Everyone" user.
 			SecurityIdentifier identifier = new SecurityIdentifier(WellKnownSidType.WorldSid, null);
-			NTAccount user = identifier.Translate(typeof(NTAccount)) as NTAccount;
+			NTAccount? user = identifier.Translate(typeof(NTAccount)) as NTAccount;
+			if (user == null)
+				return;
 
 			// Write permission for the user.
 			RegistryAccessRule accessRule = new RegistryAccessRule(
