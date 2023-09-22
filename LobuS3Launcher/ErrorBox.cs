@@ -8,6 +8,10 @@ namespace LobuS3Launcher
 		private static MessageBoxImage Icon { get; } = MessageBoxImage.Error;
 		private static MessageBoxButton Button { get; } = MessageBoxButton.OK;
 
+		/// <summary>
+		/// Show a MessageBox, styled for errors.
+		/// </summary>
+		/// <param name="message">The error message to display.</param>
 		public static void Show(string message)
 		{
 			MessageBox.Show(message, Caption, Button, Icon);
