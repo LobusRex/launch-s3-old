@@ -1,0 +1,20 @@
+<svg width="48" height="48" xmlns="http://www.w3.org/2000/svg">
+    <!-- Top triangle -->
+    <polygon points="8,5 8,24 46,24" fill="#3aaf5d" stroke-linejoin="round" stroke-width="4" stroke="#3aaf5d" />
+
+    <!-- Bottom triangle -->
+    <polygon points="8,43 8,24 46,24" fill="#2a8d3b" stroke-linejoin="round" stroke-width="4" stroke="#2a8d3b" />
+
+    <!-- Front triangle -->
+    <polygon points="8,14 8,34 46,24" fill="#85f1a7" stroke-linejoin="round" stroke-width="4" stroke="#85f1a7" />
+
+
+    <!-- Grid by Microsoft from https://learn.microsoft.com/en-us/windows/apps/design/style/iconography/app-icon-design -->
+    <!-- <rect x="3" y="3" rx="2" ry="2" width="42" height="42" fill="none" stroke="black" stroke-width="0.2" opacity="0.5"/>
+    <rect x="6" y="0" rx="2" ry="2" width="36" height="48" fill="none" stroke="black" stroke-width="0.2" opacity="0.5"/>
+    <rect x="0" y="6" rx="2" ry="2" width="48" height="36" fill="none" stroke="black" stroke-width="0.2" opacity="0.5"/>
+    <rect x="12" y="0" rx="2" ry="2" width="24" height="48" fill="none" stroke="black" stroke-width="0.2" opacity="0.5"/>
+    <rect x="0" y="12" rx="2" ry="2" width="48" height="24" fill="none" stroke="black" stroke-width="0.2" opacity="0.5"/>
+    <line x1="0" y1="24" x2="48" y2="24" stroke="black" stroke-width="0.2" opacity="0.5"/>
+    <line x1="24" y1="0" x2="24" y2="48" stroke="black" stroke-width="0.2" opacity="0.5"/> -->
+</svg>
