@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Common
+﻿namespace Common
 {
 	public static class DocumentFolders
 	{
@@ -87,28 +79,5 @@ namespace Common
 			foreach (FileInfo file in source.GetFiles())
 				file.CopyTo(System.IO.Path.Combine(target.FullName, file.Name));
 		}
-
-		public class DocumentFolder
-		{
-			public string Path { get; private set; }
-			public string SavePath { get; private set; }
-			public string ModPath { get; private set; }
-
-			public DocumentFolder(string path, string saveFolder, string modFolder)
-			{
-				if (path == null)
-					throw new ArgumentNullException(nameof(path));
-
-				if (saveFolder == null)
-					throw new ArgumentNullException(nameof(saveFolder));
-
-				if (modFolder == null)
-					throw new ArgumentNullException(nameof(saveFolder));
-
-				Path = path;
-				SavePath = System.IO.Path.Combine(path, saveFolder);
-				ModPath = System.IO.Path.Combine(path, modFolder); ;
-			}
-		} 
 	}
 }
